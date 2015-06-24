@@ -64,8 +64,6 @@ public class InstituteTeacherBL implements InstituteTeacherBLService{
 		try { 
 			CourseDataService courseData =(CourseDataService) Naming.lookup("rmi://localhost:8888/CourseData"); 
 			courseList = courseData.read();
-			System.out.println(); 
-            System.out.println(); 
         } catch (NotBoundException e) { 
             e.printStackTrace(); 
         } catch (MalformedURLException e) { 
@@ -101,8 +99,6 @@ public class InstituteTeacherBL implements InstituteTeacherBLService{
 		try { 
 			SelectCourseDataService selectCourseDataService =(SelectCourseDataService) Naming.lookup("rmi://localhost:8888/SelectCourseData"); 
 			selectRecord = selectCourseDataService.read();
-			System.out.println(); 
-            System.out.println(); 
         } catch (NotBoundException e) { 
             e.printStackTrace(); 
         } catch (MalformedURLException e) { 
@@ -134,8 +130,6 @@ public class InstituteTeacherBL implements InstituteTeacherBLService{
 			try { 
 				StudentInforDataService studentInfroData =(StudentInforDataService) Naming.lookup("rmi://localhost:8888/StudentInforData"); 
 				stuInfroList = studentInfroData.read();
-				System.out.println(); 
-	            System.out.println(); 
 	        } catch (NotBoundException e) { 
 	            e.printStackTrace(); 
 	        } catch (MalformedURLException e) { 
@@ -163,9 +157,7 @@ public class InstituteTeacherBL implements InstituteTeacherBLService{
 			  
 		   }*/
 		}
-		else{
-			result = null;
-		}
+		
 		return result;
 	}
 
@@ -420,4 +412,34 @@ public class InstituteTeacherBL implements InstituteTeacherBLService{
 		  return isSet;
 	}
 	
+	/*方法名： publishScore
+	 * 功能：发布学生成绩
+	 * (non-Javadoc)
+	 * @see busninesslogic.TeacherBLService#publishScore(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	public boolean publishScore(String studentId, String courseNo, String score) {
+		Boolean isSet = false;
+		try { 
+			SelectCourseDataService selectCourseData =(SelectCourseDataService) Naming.lookup("rmi://localhost:8888/SelectCourseData"); 
+			isSet = selectCourseData.setScore(studentId+";"+courseNo+";"+score);
+        } catch (NotBoundException e) { 
+            e.printStackTrace(); 
+        } catch (MalformedURLException e) { 
+            e.printStackTrace(); 
+        } catch (RemoteException e) { 
+            e.printStackTrace();   
+        }
+		return isSet;
+	}
+	
+	// 获得成绩信息
+	public ArrayList<String> getScoreList() {
+		try { 
+			SelectCourseDataService selectCourseData =(SelectCourseDataService) Naming.lookup("rmi://localhost:8888/SelectCourseData"); 
+			return selectCourseData.read();
+        } catch (Exception e) { 
+            e.printStackTrace();
+            return null;
+        }
+	}
 }

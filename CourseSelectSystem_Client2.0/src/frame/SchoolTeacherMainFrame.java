@@ -1,32 +1,22 @@
 package frame;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+
+import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-
-import java.awt.Color;
-import java.awt.Component;
-
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JButton;
-
-import frame.SchoolTeacherMainFrame.CheckCoInfroListener.CheckSchoolCourseOKButtonListener;
-import frame.StudentMainFrame.ChooseCourseListener.OkButtonListener;
 
 import busninesslogic.AdminBL;
 import busninesslogic.AdminBLService;
@@ -34,32 +24,29 @@ import busninesslogic.LoginBL;
 import busninesslogic.SchoolTeacherBL;
 import busninesslogic.SchoolTeacherBLService;
 
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
-
-public class SchoolTeacherMainFrame /*extends JFrame*/{
-	private ImageIcon background;
+public class SchoolTeacherMainFrame /*extends MyFrame*/{
+	//private ImageIcon background;
 	private JFrame SchoolTeacherFrame;
 	private JPanel panel;
 	private JLabel lblNewLabel;
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JScrollPane scrollPane;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
-	private JButton btnNewButton_3;
-	private JButton btnNewButton_4;
-	private JButton btnNewButton_5;
-	private JButton btnNewButton_6;
+	private MyButton btnNewButton;
+	private MyButton btnNewButton_1;
+	private MyButton btnNewButton_2;
+	private MyButton btnNewButton_3;
+	private MyButton btnNewButton_4;
+	private MyButton btnNewButton_5;
+	private MyButton btnNewButton_6;
 	private JPanel panelNow;
 	private JTextField newPasswordField;
+	private JTextField newPasswordField1;
+	private JTextField newPasswordField2;
 	private JTextField textField;
-	private JComboBox comboBox;
-	private JTable table;
-	private SchoolTeacherBLService schoolTeacherBL;
+	private JComboBox<String> comboBox;
+	private MyTable table;
+	public static SchoolTeacherBLService schoolTeacherBL;
     private String ID;
     private String password;
 	private AdminBLService adminBL;
@@ -68,6 +55,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
         
 	}
 	
+	@SuppressWarnings("static-access")
 	public SchoolTeacherMainFrame(String ID,String password,SchoolTeacherBLService SchoolTeacherBL,AdminBLService adminBL) {
 		this.schoolTeacherBL = SchoolTeacherBL;
 		this.adminBL= adminBL;
@@ -96,7 +84,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 		
 		lblNewLabel = new JLabel("欢迎"+schoolTeacherBL.checkSelfInfor(ID)[1]+"老师！");
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("德彪钢笔行书字库", Font.BOLD, 24));
+		lblNewLabel.setFont(new Font("德彪钢笔行书字库", Font.PLAIN, 24));
 		lblNewLabel.setBounds(80, 10, 425, 45);
 		panel.add(lblNewLabel);
 		lblNewLabel.setVisible(true);
@@ -109,8 +97,8 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 		panel_1.setLayout(null);
 		panel_1.setVisible(true);
 		
-		btnNewButton = new JButton("管理整体框架策略");
-		btnNewButton.setFont(new Font("楷体", Font.BOLD, 16));
+		btnNewButton = new MyButton("管理整体框架策略");
+		btnNewButton.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		btnNewButton.setBounds(10, 25, 150, 35);
 		btnNewButton.setBorder(new LineBorder(new Color(199, 0, 133 )));
 		btnNewButton.setBackground(new Color(199, 0, 133 ));
@@ -119,8 +107,8 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 		btnNewButton.addActionListener(new PublishCourseListener());
 		panel_1.add(btnNewButton);
 		
-		btnNewButton_1 = new JButton("查看各院教学计划");
-		btnNewButton_1.setFont(new Font("楷体", Font.BOLD, 16));
+		btnNewButton_1 = new MyButton("查看各院教学计划");
+		btnNewButton_1.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		btnNewButton_1.setBounds(10, 75, 150, 35);
 		btnNewButton_1.setBorder(new LineBorder(new Color(199, 0, 133 )));
 		btnNewButton_1.setBackground(new Color(199, 0, 133 ));
@@ -129,8 +117,8 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 		btnNewButton_1.addActionListener(new CheckPlanListener());
 		panel_1.add(btnNewButton_1);
 		
-		btnNewButton_2 = new JButton("查看教师统计信息");
-		btnNewButton_2.setFont(new Font("楷体", Font.BOLD, 16));
+		btnNewButton_2 = new MyButton("查看教师统计信息");
+		btnNewButton_2.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		btnNewButton_2.setBounds(10, 125, 150, 35);
 		btnNewButton_2.setBorder(new LineBorder(new Color(199, 0, 133 )));
 		btnNewButton_2.setBackground(new Color(199, 0, 133 ));
@@ -139,8 +127,8 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 		btnNewButton_2.addActionListener(new CheckThInfroListener());
 		panel_1.add(btnNewButton_2);
 		
-		btnNewButton_3 = new JButton("查看课程统计信息");
-		btnNewButton_3.setFont(new Font("楷体", Font.BOLD, 16));
+		btnNewButton_3 = new MyButton("查看课程统计信息");
+		btnNewButton_3.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		btnNewButton_3.setBounds(10, 175, 150, 35);
 		btnNewButton_3.setBorder(new LineBorder(new Color(199, 0, 133 )));
 		btnNewButton_3.setBackground(new Color(199, 0, 133 ));
@@ -149,8 +137,8 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 		btnNewButton_3.addActionListener(new CheckCoInfroListener());
 		panel_1.add(btnNewButton_3);
 		
-		btnNewButton_4 = new JButton("查看学生统计信息");
-		btnNewButton_4.setFont(new Font("楷体", Font.BOLD, 16));
+		btnNewButton_4 = new MyButton("查看学生统计信息");
+		btnNewButton_4.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		btnNewButton_4.setBounds(10, 225, 150, 35);
 		btnNewButton_4.setBorder(new LineBorder(new Color(199, 0, 133 )));
 		btnNewButton_4.setBackground(new Color(199, 0, 133 ));
@@ -159,8 +147,8 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 		btnNewButton_4.addActionListener(new CheckStInfroListener());
 		panel_1.add(btnNewButton_4);
 		
-		btnNewButton_5 = new JButton("修改密码");
-		btnNewButton_5.setFont(new Font("楷体", Font.BOLD, 16));
+		btnNewButton_5 = new MyButton("修改密码");
+		btnNewButton_5.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		btnNewButton_5.setBounds(10, 275, 150, 35);
 		btnNewButton_5.setBorder(new LineBorder(new Color(199, 0, 133 )));
 		btnNewButton_5.setBackground(new Color(199, 0, 133 ));
@@ -169,8 +157,8 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 		btnNewButton_5.addActionListener(new ChangePasswordListener());
 		panel_1.add(btnNewButton_5);
 		
-		btnNewButton_6 = new JButton("注销");
-		btnNewButton_6.setFont(new Font("楷体", Font.BOLD, 16));
+		btnNewButton_6 = new MyButton("注销");
+		btnNewButton_6.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		btnNewButton_6.setBounds(10, 325, 150, 35);
 		btnNewButton_6.setBorder(new LineBorder(new Color(199, 0, 133 )));
 		btnNewButton_6.setBackground(new Color(199, 0, 133 ));
@@ -204,7 +192,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
     	JTextField textField_9;
     	JTextField textField_10;
     	JTextField textField_11;
-    	JButton policyOKButton;
+    	MyButton policyOKButton;
 	    public void actionPerformed(ActionEvent e){
 	    	if(adminBL.getAbleToChangePolicy()){
 	    		SchoolTeacherFrame.remove(panelNow);
@@ -216,15 +204,15 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 				Panel.setVisible(true);
 	 			Panel.setLayout(null);
 		    	
-	 			JButton button = new JButton("发布通识通修课程");
-				button.setFont(new Font("楷体", Font.BOLD, 12));
+	 			MyButton button = new MyButton("发布通识通修课程");
+				button.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 				button.setBounds(0, 0, 315, 23);
 				Panel.add(button);
 				button.addActionListener(new PublishCourseListener());
 				button.setVisible(true);
 				
-				JButton button2 = new JButton("制定整体框架策略");
-				button2.setFont(new Font("楷体", Font.BOLD, 12));
+				MyButton button2 = new MyButton("制定整体框架策略");
+				button2.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 				button2.setBounds(300, 0, 315, 23);
 				Panel.add(button2);
 				button2.addActionListener(new MakePolicyListener());
@@ -233,49 +221,49 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 				
 				
 				JLabel lblNewLabel_1 = new JLabel("学科专业课程");
-				lblNewLabel_1.setFont(new Font("楷体", Font.BOLD, 16));
+				lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 				lblNewLabel_1.setBounds(50, 60, 150, 35);
 				Panel.add(lblNewLabel_1);
 				lblNewLabel_1.setVisible(true);
 				
 				JLabel lblNewLabel_2 = new JLabel("专业选修课程");
-				lblNewLabel_2.setFont(new Font("楷体", Font.BOLD, 16));
+				lblNewLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 				lblNewLabel_2.setBounds(50, 100, 150, 35);
 				Panel.add(lblNewLabel_2);
 				lblNewLabel_2.setVisible(true);
 				
 				JLabel lblNewLabel_3 = new JLabel("跨专业选修课程");
-				lblNewLabel_3.setFont(new Font("楷体", Font.BOLD, 16));
+				lblNewLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 				lblNewLabel_3.setBounds(50, 140, 150, 35);
 				Panel.add(lblNewLabel_3);
 				lblNewLabel_3.setVisible(true);
 				
 				JLabel lblNewLabel_4 = new JLabel("公共选修课程");
-				lblNewLabel_4.setFont(new Font("楷体", Font.BOLD, 16));
+				lblNewLabel_4.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 				lblNewLabel_4.setBounds(50, 180, 150, 35);
 				Panel.add(lblNewLabel_4);
 				lblNewLabel_4.setVisible(true);
 				
 				JLabel lblNewLabel_5 = new JLabel("第二课堂");
-				lblNewLabel_5.setFont(new Font("楷体", Font.BOLD, 16));
+				lblNewLabel_5.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 				lblNewLabel_5.setBounds(50, 220, 150, 35);
 				Panel.add(lblNewLabel_5);
 				lblNewLabel_5.setVisible(true);
 				
 				JLabel lblNewLabel_6 = new JLabel("毕业论文设计");
-				lblNewLabel_6.setFont(new Font("楷体", Font.BOLD, 16));
+				lblNewLabel_6.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 				lblNewLabel_6.setBounds(50, 260, 150, 35);
 				Panel.add(lblNewLabel_6);
 				lblNewLabel_6.setVisible(true);
 				
 				JLabel lblNewLabel_7 = new JLabel("建议学分");
-				lblNewLabel_7.setFont(new Font("楷体", Font.BOLD, 16));
+				lblNewLabel_7.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 				lblNewLabel_7.setBounds(220, 30, 150, 35);
 				Panel.add(lblNewLabel_7);
 				lblNewLabel_7.setVisible(true);
 				
 				JLabel lblNewLabel_8 = new JLabel("开设学期");
-				lblNewLabel_8.setFont(new Font("楷体", Font.BOLD, 16));
+				lblNewLabel_8.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 				lblNewLabel_8.setBounds(400, 30, 150, 35);
 				Panel.add(lblNewLabel_8);
 				lblNewLabel_8.setVisible(true);
@@ -343,7 +331,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 				textField_11.setColumns(10);
 				
 				
-				policyOKButton = new JButton("确定");
+				policyOKButton = new MyButton("确定");
 				policyOKButton.setBounds(205, 320, 93, 33);
 				Panel.add(policyOKButton);
 				policyOKButton.addActionListener(new policyOkButtonListener());
@@ -354,7 +342,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 				SchoolTeacherFrame.add(panelNow);
 				SchoolTeacherFrame.repaint();
 	    	}else{
-	    		JOptionPane.showMessageDialog(null, "不可更改！");
+	    		new NoticePanel(new String[]{"不可更改！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
 	    	}
 	    	
 	    }
@@ -367,15 +355,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 		    			textField_8.getText().equals("")||textField_9.getText().equals("")||
 		    			textField_10.getText().equals("")||textField_11.getText().equals("")||
 		    			textField.getText().equals("")){
-		    		JDialog infoDialog = new JDialog();
-					infoDialog.setSize(300,200);
-					infoDialog.setLocation(600,300);
-					infoDialog.setVisible(true);
-					JLabel infoLabel = new JLabel("框架策略不完整!");
-					infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-					infoLabel.setVisible(true);
-					infoDialog.add(infoLabel);
-
+	    			new NoticePanel(new String[]{"框架策略不完整！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
 		    	}
 		    	else {
 	    		String[]policy=new String [6];    		
@@ -419,15 +399,15 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 					Panel.setVisible(true);
 		 			Panel.setLayout(null);
 			    	
-		 			JButton button = new JButton("发布通识通修课程");
-					button.setFont(new Font("楷体", Font.BOLD, 12));
+		 			MyButton button = new MyButton("发布通识通修课程");
+					button.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 					button.setBounds(0, 0, 315, 23);
 					Panel.add(button);
 					button.addActionListener(new PublishCourseListener());
 					button.setVisible(true);
 					
-					JButton button2 = new JButton("制定整体框架策略");
-					button2.setFont(new Font("楷体", Font.BOLD, 12));
+					MyButton button2 = new MyButton("制定整体框架策略");
+					button2.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 					button2.setBounds(300, 0, 315, 23);
 					Panel.add(button2);
 					button2.addActionListener(new MakePolicyListener());
@@ -435,7 +415,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 
 				
 				JLabel lblNewLabel_1 = new JLabel("通识通修课程");
-				lblNewLabel_1.setFont(new Font("楷体", Font.BOLD, 16));
+				lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 				lblNewLabel_1.setBounds(35, 26, 150, 35);
 				Panel.add(lblNewLabel_1);
 				lblNewLabel_1.setVisible(true);
@@ -446,33 +426,10 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 					for(int j=0;j<8;j++){
 						temp[i][j] = temp[i][j+1];
 					}
-	  		    table = new JTable(temp,columnTitle);	
-	  		    makeFace(table);
-	  		    
-	  		  TableColumn column = table.getColumnModel().getColumn(0);
-	  	      column.setPreferredWidth(50);//设置列宽的函数
-	  	      column = table.getColumnModel().getColumn(1);
-		      column.setPreferredWidth(100);//设置列宽的函数
-		      column = table.getColumnModel().getColumn(2);
-	  	      column.setPreferredWidth(130);//设置列宽的函数
-	  	      column = table.getColumnModel().getColumn(3);
-		      column.setPreferredWidth(35);//设置列宽的函数
-		      column = table.getColumnModel().getColumn(4);
-	  	      column.setPreferredWidth(70);//设置列宽的函数
-	  	      column = table.getColumnModel().getColumn(5);
-		      column.setPreferredWidth(100);//设置列宽的函数
-		      column = table.getColumnModel().getColumn(6);
-	  	      column.setPreferredWidth(100);//设置列宽的函数
-	  	      column = table.getColumnModel().getColumn(7);
-		      column.setPreferredWidth(120);
-		     
+	  		    table = new MyTable(temp,columnTitle,SchoolTeacherFrame,544,150,false);	
 
-	  		    
-	  		    scrollPane = new JScrollPane(table);//带滚动条的面板	
-				scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	            scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	  		    scrollPane = table.getScrollPane();//带滚动条的面板
 				scrollPane.setBounds(37,55,544,150);
-				scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 	 		    scrollPane.setVisible(true);
 	 		    Panel.add(scrollPane);
 		
@@ -563,7 +520,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 	     		textField_8.setText("");
 	     		textField_9.setText("");
 				
-				JButton button_5 = new JButton("确定");
+				MyButton button_5 = new MyButton("确定");
 				button_5.setBounds(255, 340, 73, 23);
 				Panel.add(button_5);
 				button_5.addActionListener(new publishCourseForAllOkButtonListener());
@@ -575,7 +532,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 				SchoolTeacherFrame.repaint();
 	 			
 	    	    }else{
-	    	    	JOptionPane.showMessageDialog(null, "不可更改");
+	    	    	new NoticePanel(new String[]{"不可更改！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
 	    	    }
 	    	    
 	    }
@@ -584,15 +541,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 	    	if(textField_1.getText().equals("")||textField_2.getText().equals("")||textField_3.getText().equals("")||
 	    			textField_4.getText().equals("")||textField_6.getText().equals("")||textField_7.getText().equals("")||
 	    			textField_8.getText().equals("")||textField_9.getText().equals("")){
-	    		JDialog infoDialog = new JDialog();
-				infoDialog.setSize(300,200);
-				infoDialog.setLocation(600,300);
-				infoDialog.setVisible(true);
-				JLabel infoLabel = new JLabel("课程信息不完整!");
-				infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-				infoLabel.setVisible(true);
-				infoDialog.add(infoLabel);
-
+	    		new NoticePanel(new String[]{"课程信息不完整！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
 	    	}
 	    	else {
 	    		    
@@ -604,13 +553,10 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 	    			if(a==true){
 	    				panelNow.remove(scrollPane);
 	    				String[] columnTitle=new String[] {"编号","院系","名称","学分","学期","时间","地点","老师"};
-		      	        table = new JTable(schoolTeacherBL.checkCourseForAll(""),columnTitle);		
-		      	        makeFace(table);
-		      	        scrollPane = new JScrollPane(table);//带滚动条的面板	
-		    			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		                scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		      	        table = new MyTable(schoolTeacherBL.checkCourseForAll(""),columnTitle,SchoolTeacherFrame,544,150,false);		
+
+		      	        scrollPane = table.getScrollPane();//带滚动条的面板
 		    			scrollPane.setBounds(10, 55, 544, 150);
-		    			scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		     		    scrollPane.setVisible(true);
 		     		    panelNow.add(scrollPane);
 	     		      textField_1.setText("");
@@ -623,14 +569,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 	     		      textField_9.setText("");
 	    			}
 	    			else{
-	    				JDialog infoDialog = new JDialog();
-	    				infoDialog.setSize(300,200);
-	    				infoDialog.setLocation(600,300);
-	    				infoDialog.setVisible(true);
-	    				JLabel infoLabel = new JLabel("该课程已存在！");
-	    				infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-	    				infoLabel.setVisible(true);
-	    				infoDialog.add(infoLabel);
+	    				new NoticePanel(new String[]{"该课程已存在！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
 	    			}
 	     		
      		    SchoolTeacherFrame.repaint();
@@ -664,13 +603,13 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
  			Panel.setLayout(null);
  			
  			JLabel lblNewLabel_1 = new JLabel("开课院系");
-			lblNewLabel_1.setFont(new Font("楷体", Font.BOLD, 16));
+			lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 			lblNewLabel_1.setBounds(20, 10, 100, 35);
 			Panel.add(lblNewLabel_1);
 			lblNewLabel_1.setVisible(true);
 			
-			JButton button = new JButton("确认");
-			button.setFont(new Font("楷体", Font.BOLD, 12));
+			MyButton button = new MyButton("确认");
+			button.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 			button.setBounds(362, 12, 73, 23);
 			Panel.add(button);
 			button.setVisible(true);
@@ -679,7 +618,7 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 			
 			String []s={"商学院","软件学院","计算机系","新闻传播学院","哲学系","历史学系","政府管理学院","数学系","物理系"
 			 ,"化学系","医学院","电子","环境学院"};		
-		    comboBox = new JComboBox(s);
+		    comboBox = new JComboBox<String>(s);
 			comboBox.setBounds(150, 10, 100, 25);
 			Panel.add(comboBox);
 			comboBox.setVisible(true);
@@ -687,14 +626,10 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 			
 			String[][]row=new String[6][8];
 			String[] columnTitle=new String[] {"类别","编号","名称","学分","学期","时间","地点","老师"};   
-  		    table = new JTable(row,columnTitle);
-  		    makeFace(table);
+  		    table = new MyTable(row,columnTitle,SchoolTeacherFrame,544,200,false);
 	
-			scrollPane = new JScrollPane(table);//带滚动条的面板	
-			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			scrollPane = table.getScrollPane();//带滚动条的面板	
 			scrollPane.setBounds(37,55,544,200);
-			scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
  		    scrollPane.setVisible(true);
 			Panel.add(scrollPane);
 			
@@ -769,32 +704,10 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 					for(int j=2;j<8;j++){
 						temp[i][j] = temp[i][j+1];
 					}
-	  		    table = new JTable(temp,columnNames);		
-	  		  makeFace(table);
-	  		  TableColumn column = table.getColumnModel().getColumn(0);
-	  	      column.setPreferredWidth(110);//设置列宽的函数
-	  	      column = table.getColumnModel().getColumn(1);
-		      column.setPreferredWidth(50);//设置列宽的函数
-		      column = table.getColumnModel().getColumn(2);
-	  	      column.setPreferredWidth(130);//设置列宽的函数
-	  	      column = table.getColumnModel().getColumn(3);
-		      column.setPreferredWidth(35);//设置列宽的函数
-		      column = table.getColumnModel().getColumn(4);
-	  	      column.setPreferredWidth(70);//设置列宽的函数
-	  	      column = table.getColumnModel().getColumn(5);
-		      column.setPreferredWidth(100);//设置列宽的函数
-		      column = table.getColumnModel().getColumn(6);
-	  	      column.setPreferredWidth(100);//设置列宽的函数
-	  	      column = table.getColumnModel().getColumn(7);
-		      column.setPreferredWidth(120);
-
-				
-				
-				scrollPane=new JScrollPane(table);
-	 		    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	 		    scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	  		    table = new MyTable(temp,columnNames,SchoolTeacherFrame,544,200,false);		
+	  		  				
+				scrollPane = table.getScrollPane();
 	 		    scrollPane.setBounds(37,55,544,200);
-	 		    scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 	 		    scrollPane.setVisible(true);
 	 		    panelNow.add(scrollPane);
 	 		    
@@ -837,31 +750,29 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
  			Panel.setLayout(null);
  			
  			JLabel lblNewLabel_1 = new JLabel("教师工号");
-			lblNewLabel_1.setFont(new Font("楷体", Font.BOLD, 16));
-			lblNewLabel_1.setBounds(20, 10, 100, 35);
+			lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+			lblNewLabel_1.setHorizontalAlignment(JLabel.RIGHT);
+			lblNewLabel_1.setBounds(20, 12, 100, 30);
 			Panel.add(lblNewLabel_1);
 			lblNewLabel_1.setVisible(true);
 			
-			JButton button = new JButton("\u786E\u5B9A");
-			button.setFont(new Font("楷体", Font.BOLD, 12));
-			button.setBounds(362, 12, 73, 23);
+			MyButton button = new MyButton("确认");
+			button.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+			button.setBounds(454, 12, 73, 30);
 			Panel.add(button);
 			button.setVisible(true);
 			button.addActionListener(new CheckThInforOkButtonListener());
 			
 		    textField = new JTextField();
-			textField.setBounds(150, 12, 100, 25);
+			textField.setBounds(150, 12, 100, 30);
 			Panel.add(textField);
 			textField.setColumns(10);
 	    	
   			String[] columnTitle=new String[] {"工号","姓名","院系","开设课程"};   
-  		    table = new JTable(schoolTeacherBL.checkTeacherInfor(),columnTitle);	
-  		    makeFace(table);
-			scrollPane = new JScrollPane(table);//带滚动条的面板	
-			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+  		    table = new MyTable(schoolTeacherBL.checkTeacherInfor(),columnTitle,SchoolTeacherFrame,524,300,3);	
+  		    
+			scrollPane = table.getScrollPane();//带滚动条的面板
 			scrollPane.setBounds(37, 55, 524, 300);
-			scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
  		    scrollPane.setVisible(true);
 			Panel.add(scrollPane);
 			
@@ -875,40 +786,18 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 			public void actionPerformed(ActionEvent e) {
 				
 				 String [] columnNames = {"工号","姓名","院系","开设课程"};
-//				 if(((String)textField.getText()).equals("")){
-//	            	   JDialog infoDialog = new JDialog();
-//						infoDialog.setSize(300,200);
-//						infoDialog.setLocation(500,400);
-//						infoDialog.setVisible(true);
-//						JLabel infoLabel = new JLabel("搜索条件不符合规格！");
-//						infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//						infoLabel.setVisible(true);
-//						infoDialog.add(infoLabel);
-//
-//	               }
-//				 else{
 					 
 				String[]temp=schoolTeacherBL.checkTeacherInfor((String)textField.getText());
                 if(temp==null){
-            	   JDialog infoDialog = new JDialog();
-					infoDialog.setSize(300,200);
-					infoDialog.setLocation(600,300);
-					infoDialog.setVisible(true);
-					JLabel infoLabel = new JLabel("该教师不存在！");
-					infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-					infoLabel.setVisible(true);
-					infoDialog.add(infoLabel);
-
+                	new NoticePanel(new String[]{"该教师不存在！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
                }
                else{
             	panelNow.remove(scrollPane);
 				String[][]tmp=new String[1][];				
 				tmp[0]=temp;
-				table = new JTable(tmp,columnNames);
-				makeFace(table);
-				scrollPane=new JScrollPane(table);
-	 		    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	 		    scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				table = new MyTable(tmp,columnNames,SchoolTeacherFrame,524,250,false);
+				
+				scrollPane = table.getScrollPane();
 	 		    scrollPane.setBounds(37, 55, 524, 250);
 	 		    scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 	 		    scrollPane.setVisible(true);
@@ -935,44 +824,29 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
  			Panel.setLayout(null);
  			
  			JLabel lblNewLabel_1 = new JLabel("学生学号");
-			lblNewLabel_1.setFont(new Font("楷体", Font.BOLD, 16));
-			lblNewLabel_1.setBounds(20, 10, 100, 35);
+			lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+			lblNewLabel_1.setHorizontalAlignment(JLabel.RIGHT);
+			lblNewLabel_1.setBounds(20, 12, 100, 30);
 			Panel.add(lblNewLabel_1);
 			lblNewLabel_1.setVisible(true);
 			
-			JButton button = new JButton("\u786E\u5B9A");
-			button.setFont(new Font("楷体", Font.BOLD, 12));
-			button.setBounds(362, 12, 73, 23);
+			MyButton button = new MyButton("确认");
+			button.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+			button.setBounds(454, 12, 73, 30);
 			Panel.add(button);
 			button.setVisible(true);
 			button.addActionListener(new CheckStInforOkButtonListener());
 			
 		    textField = new JTextField();
-			textField.setBounds(150, 12, 100, 25);
+			textField.setBounds(150, 12, 100, 30);
 			Panel.add(textField);
 			textField.setColumns(10);
 	    	
   			String[] columnTitle=new String[] {"学号","姓名","院系","学分绩","毕业资格审核","退学资格"};
-  		    table = new JTable(schoolTeacherBL.checkStudentInfor(),columnTitle);
-  		  makeFace(table);
-  		   TableColumn column = table.getColumnModel().getColumn(0);
-  	       column.setPreferredWidth(100);//设置列宽的函数
-  	      column = table.getColumnModel().getColumn(1);
-	      column.setPreferredWidth(50);//设置列宽的函数
-	      column = table.getColumnModel().getColumn(2);
-  	      column.setPreferredWidth(100);//设置列宽的函数
-  	      column = table.getColumnModel().getColumn(3);
-	      column.setPreferredWidth(50);//设置列宽的函数
-	      column = table.getColumnModel().getColumn(4);
-  	      column.setPreferredWidth(130);//设置列宽的函数
-  	      column = table.getColumnModel().getColumn(5);
-	      column.setPreferredWidth(100);//设置列宽的函数
-	      
-			scrollPane = new JScrollPane(table);//带滚动条的面板	
-			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+  		    table = new MyTable(schoolTeacherBL.checkStudentInfor(),columnTitle,SchoolTeacherFrame,524,300,false);
+  		  
+  		    scrollPane = table.getScrollPane();//带滚动条的面板
 			scrollPane.setBounds(37, 55, 524, 300);
-			scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
  		    scrollPane.setVisible(true);
 			Panel.add(scrollPane);
 
@@ -985,29 +859,9 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 	    
 	    class CheckStInforOkButtonListener implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
-//				if(((String)textField.getText()).equals("")){
-//	            	   JDialog infoDialog = new JDialog();
-//						infoDialog.setSize(300,200);
-//						infoDialog.setLocation(500,400);
-//						infoDialog.setVisible(true);
-//						JLabel infoLabel = new JLabel("搜索条件不符合规格！");
-//						infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//						infoLabel.setVisible(true);
-//						infoDialog.add(infoLabel);
-//
-//	               }
-//				 else{
 					 String[]temp=schoolTeacherBL.checkStudentInfor((String)textField.getText());
 		                if(temp==null){
-		            	    JDialog infoDialog = new JDialog();
-							infoDialog.setSize(300,200);
-							infoDialog.setLocation(600,300);
-							infoDialog.setVisible(true);
-							JLabel infoLabel = new JLabel("该学生不存在！");
-							infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-							infoLabel.setVisible(true);
-							infoDialog.add(infoLabel);
-
+		                	new NoticePanel(new String[]{"该学生不存在！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
 		               }
 		               else{
 				panelNow.remove(scrollPane);
@@ -1015,25 +869,10 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 				
 				String[][]tmp=new String[1][];				
 				tmp[0]=temp;
-				table = new JTable(tmp,columnNames);
-				makeFace(table);
-				 TableColumn column = table.getColumnModel().getColumn(0);
-		  	      column.setPreferredWidth(100);//设置列宽的函数
-		  	      column = table.getColumnModel().getColumn(1);
-			      column.setPreferredWidth(50);//设置列宽的函数
-			      column = table.getColumnModel().getColumn(2);
-		  	      column.setPreferredWidth(100);//设置列宽的函数
-		  	      column = table.getColumnModel().getColumn(3);
-			      column.setPreferredWidth(50);//设置列宽的函数
-			      column = table.getColumnModel().getColumn(4);
-		  	      column.setPreferredWidth(130);//设置列宽的函数
-		  	      column = table.getColumnModel().getColumn(5);
-			      column.setPreferredWidth(100);//设置列宽的函数
-				scrollPane=new JScrollPane(table);
-	 		    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	 		    scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				table = new MyTable(tmp,columnNames,SchoolTeacherFrame,524,250,false);
+				
+				scrollPane = table.getScrollPane();
 	 		    scrollPane.setBounds(37, 55, 524, 250);
-	 		    scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 	 		    scrollPane.setVisible(true);
 	 		    panelNow.add(scrollPane);
 	 		    SchoolTeacherFrame.repaint();
@@ -1049,79 +888,49 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 	    public void actionPerformed(ActionEvent e){  
 	    	SchoolTeacherFrame.remove(panelNow);
 	    	SchoolTeacherFrame.setTitle("学校教务老师——查看课程信息");
-			JPanel Panel = new JPanel();
-			Panel.setBackground(Color.white);
-//			Panel.setBackground(new Color(255 ,255, 224 ));
+	    	JPanel Panel = new JPanel();
 			Panel.setBounds(170, 70, 614, 400);
-//			Panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+			Panel.setBackground(Color.WHITE);
 			Panel.setVisible(true);
  			Panel.setLayout(null);
- 			
- 			JLabel label = new JLabel("课程号");
- 			label.setFont(new Font("楷体", Font.BOLD, 16));
- 			label.setBounds(50, 270, 100, 30);
+    		
+ 			JLabel label = new JLabel("备注：");
+ 			label.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+ 			label.setBounds(37, 270, 100, 30);
  			Panel.add(label);
  			label.setVisible(true);
  			
- 			JLabel label2 = new JLabel("(补充了教师、教材、参考书目信息)");
- 			label2.setFont(new Font("楷体", Font.BOLD, 14));
- 			label2.setBounds(360, 270, 250, 30);
+ 			JLabel label2 = new JLabel("双击表项以查看额外信息！");
+ 			label2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+ 			label2.setHorizontalAlignment(JLabel.RIGHT);
+ 			label2.setForeground(new Color(199, 0, 133 ));
+ 			label2.setBounds(400, 270, 170, 30);
  			Panel.add(label2);
  			label2.setVisible(true);
-			
-			JButton button = new JButton("确认");
-			button.setFont(new Font("楷体", Font.BOLD, 12));
-			button.setBounds(282, 272, 60, 25);
-			Panel.add(button);
-			button.setVisible(true);
-			button.addActionListener(new CheckSchoolCourseOKButtonListener());
-			
-			textField = new JTextField();
-			textField.setBounds(150,270,100,30);
-			Panel.add(textField);
-			textField.setColumns(10);
 
 			textArea = new JTextArea();
-			textArea.setBounds(50,320,530,50);
+			textArea.setBounds(37,300,530,70);
 			textArea.setLineWrap(true);
 			textArea.setEditable(false);
+			textArea.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 			textArea.setBorder(new LineBorder(new Color(0, 0, 0)));
 			Panel.add(textArea);
 			textArea.setVisible(true);
+		
+			JLabel labelNotice = new JLabel("(补充了教师、教材、参考书目信息)");
+			labelNotice.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+			labelNotice.setHorizontalAlignment(JLabel.CENTER);
+			labelNotice.setBounds(0,368,614,20);
+			Panel.add(labelNotice);
 
   			String[] columnTitle=new String[] {"类别","编号","院系","名称","学分","学期","时间","地点"};
   			
   			String[][]temp=schoolTeacherBL.checkSchoolCourse();
-//			for(int i=0;i<temp.length;i++)				
-//					temp[i][6] = temp[i][8];
-  		    table = new JTable(temp,columnTitle);	
-  		  makeFace(table);
-  		    
-  		  TableColumn column = table.getColumnModel().getColumn(0);
-  	      column.setPreferredWidth(105);//设置列宽的函数
-  	      column = table.getColumnModel().getColumn(1);
-	      column.setPreferredWidth(50);//设置列宽的函数
-	      column = table.getColumnModel().getColumn(2);
-  	      column.setPreferredWidth(107);//设置列宽的函数
-  	      column = table.getColumnModel().getColumn(3);
-	      column.setPreferredWidth(130);//设置列宽的函数
-	      column = table.getColumnModel().getColumn(4);
-  	      column.setPreferredWidth(35);//设置列宽的函数
-  	      column = table.getColumnModel().getColumn(5);
-	      column.setPreferredWidth(100);//设置列宽的函数
-	      column = table.getColumnModel().getColumn(6);
-  	      column.setPreferredWidth(100);//设置列宽的函数
-  	      column = table.getColumnModel().getColumn(7);
-	      column.setPreferredWidth(100);//设置列宽的函数
-  	     
+  		    table = new MyTable(temp,columnTitle,SchoolTeacherFrame,544,250,false);
+  		    table.setComponent(textArea,1);
 
-  			
-
-		    scrollPane = new JScrollPane(table);//带滚动条的面板	
-			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		    scrollPane = table.getScrollPane();//带滚动条的面板
 			scrollPane.setBounds(37,10, 544, 250);
-			scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
  		    scrollPane.setVisible(true);
 			Panel.add(scrollPane);
 		
@@ -1133,31 +942,10 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 	    
 	    class CheckSchoolCourseOKButtonListener implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
-				
-				
-//				if(((String)textField.getText()).equals("")){
-//	            	   JDialog infoDialog = new JDialog();
-//						infoDialog.setSize(300,200);
-//						infoDialog.setLocation(500,400);
-//						infoDialog.setVisible(true);
-//						JLabel infoLabel = new JLabel("搜索条件不符合规格！");
-//						infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//						infoLabel.setVisible(true);
-//						infoDialog.add(infoLabel);
-//
-//	               }
-//				 else{
 				String[]temp=schoolTeacherBL.checkSchoolCourse((String)textField.getText());
 				
 				if(temp==null){
-					JDialog infoDialog = new JDialog();
-					infoDialog.setSize(300,200);
-					infoDialog.setLocation(600,300);
-					infoDialog.setVisible(true);
-					JLabel infoLabel = new JLabel("该课程不存在！");
-					infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-					infoLabel.setVisible(true);
-					infoDialog.add(infoLabel);
+					new NoticePanel(new String[]{"该课程不存在！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
 			    }
 				else{
 					panelNow.remove(textArea);
@@ -1183,95 +971,113 @@ public class SchoolTeacherMainFrame /*extends JFrame*/{
 			}
   }
   
-	    
-	    class ChangePasswordListener implements ActionListener{
+    class ChangePasswordListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			SchoolTeacherFrame.remove(panelNow);
+			SchoolTeacherFrame.setTitle("学生——更改密码");
+			JPanel Panel = new YPanel();
+			Panel.setBounds(170, 70, 614, 400);
+			Panel.setBackground(Color.white);
+//			Panel.setBackground(new Color(255 ,255, 224 ));
+//			Panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+			Panel.setVisible(true);
+ 			Panel.setLayout(null);
+ 			
+ 			JLabel labelOld = new JLabel("旧密码");
+			labelOld.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+ 			labelOld.setBounds(0, 90, 210, 30);
+ 			labelOld.setForeground(new Color(199, 0, 133));
+ 			labelOld.setHorizontalAlignment(JLabel.RIGHT);
+ 			Panel.add(labelOld);
+ 			labelOld.setVisible(true);
+ 			
+ 			JLabel labelOld2 = new JLabel("新密码");
+			labelOld2.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+ 			labelOld2.setBounds(0, 130, 210, 30);
+ 			labelOld2.setForeground(new Color(199, 0, 133));
+ 			labelOld2.setHorizontalAlignment(JLabel.RIGHT);
+ 			Panel.add(labelOld2);
+ 			labelOld2.setVisible(true);
+ 			
+			JLabel label = new JLabel("（再次输入）新密码");
+			label.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+ 			label.setBounds(0, 170, 210, 30);
+ 			label.setForeground(new Color(199, 0, 133));
+ 			label.setHorizontalAlignment(JLabel.RIGHT);
+ 			Panel.add(label);
+ 			label.setVisible(true);
+ 			
+ 			
+ 			
+ 			newPasswordField = new JPasswordField();
+ 			newPasswordField.setBounds(230,170,200,30);
+ 			newPasswordField.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+ 			newPasswordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+ 			newPasswordField.setOpaque(false);
+ 			Panel.add(newPasswordField);
+ 			newPasswordField.setVisible(true);
+
+ 			newPasswordField1 = new JPasswordField();
+ 			newPasswordField1.setBounds(230,130,200,30);
+ 			newPasswordField1.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+ 			newPasswordField1.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+ 			newPasswordField1.setOpaque(false);
+ 			Panel.add(newPasswordField1);
+ 			newPasswordField1.setVisible(true);
+ 			
+ 			newPasswordField2 = new JPasswordField();
+ 			newPasswordField2.setBounds(230,90,200,30);
+ 			newPasswordField2.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+ 			newPasswordField2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+ 			newPasswordField2.setOpaque(false);
+ 			Panel.add(newPasswordField2);
+ 			newPasswordField2.setVisible(true);
+ 			
+ 			SchoolTeacherFrame.setLayout(null);
+			panelNow=Panel;
+			SchoolTeacherFrame.add(panelNow);
+			SchoolTeacherFrame.repaint();
+			
+			MyButton OkButton = new MyButton("确定");
+ 			OkButton.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+ 			OkButton.setBounds(460, 170, 70, 30);
+ 			OkButton.addActionListener(new changePasswordOkButtonListener());
+ 			Panel.add(OkButton);
+ 			OkButton.setVisible(true);
+		}
+		class changePasswordOkButtonListener implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
-				SchoolTeacherFrame.remove(panelNow);
-				SchoolTeacherFrame.setTitle("任课老师——更改密码");
-				JPanel Panel = new YPanel();
-				Panel.setSize(614, 400);
-				Panel.setLocation(170, 70);
-				Panel.setBackground(Color.white);
-//				Panel.setBackground(new Color(255 ,255, 224 ));
-				Panel.setVisible(true);
-	 			Panel.setLayout(null);
-	 			
-				JLabel label = new JLabel("新密码");
-				label.setFont(new Font("楷体", Font.BOLD, 16));
-	 			label.setBounds(10, 10, 100, 30);
-	 			Panel.add(label);
-	 			label.setVisible(true);
-	 			
-	 			newPasswordField = new JTextField();
-	 			newPasswordField.setBounds(130,10,160,30);
-	 			Panel.add(newPasswordField);
-	 			newPasswordField.setVisible(true);
-	 			
-	 			SchoolTeacherFrame.setLayout(null);
-				panelNow=Panel;
-				SchoolTeacherFrame.add(panelNow);
-				SchoolTeacherFrame.repaint();
-				
-				JButton OkButton = new JButton("确定");
-	 			OkButton.setFont(new Font("楷体", Font.BOLD, 12));
-	 			OkButton.setBounds(450, 10, 70, 30);
-	 			OkButton.addActionListener(new changePasswordOkButtonListener());
-	 			Panel.add(OkButton);
-	 			OkButton.setVisible(true);
+				if (!newPasswordField2.getText().equals(password)) {
+					// 原密码错误
+					new NoticePanel(new String[]{"原来的密码错误！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
+					newPasswordField.setText("");
+					newPasswordField1.setText("");
+					newPasswordField2.setText("");
+					return;
+				}
+				if (!newPasswordField.getText().equals(newPasswordField1.getText())) {
+					// 两次密码不同
+					new NoticePanel(new String[]{"两次密码不相同！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
+					newPasswordField.setText("");
+					newPasswordField1.setText("");
+					newPasswordField2.setText("");
+					return;
+				}
+				if(!newPasswordField.getText().equals("") && !newPasswordField1.getText().equals("") && !newPasswordField2.getText().equals("")){
+					schoolTeacherBL.changePassword(ID, newPasswordField.getText());
+					new NoticePanel(new String[]{"密码已更新！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
+					newPasswordField.setText("");
+					newPasswordField1.setText("");
+					newPasswordField2.setText("");
+				}else{
+					new NoticePanel(new String[]{"密码不能为空！"},null,SchoolTeacherFrame,panelNow,panelNow.getWidth(),panelNow.getHeight());
+					newPasswordField.setText("");
+					newPasswordField1.setText("");
+					newPasswordField2.setText("");
+				}
 			}
-			class changePasswordOkButtonListener implements ActionListener{
-				public void actionPerformed(ActionEvent e) {
-					if(!newPasswordField.getText().equals("")){
-						schoolTeacherBL.changePassword(ID, newPasswordField.getText());
-						JDialog infoDialog = new JDialog();
-						infoDialog.setSize(200,100);
-						infoDialog.setLocation(600,300);
-						infoDialog.setVisible(true);
-						JLabel infoLabel = new JLabel("密码已更新！");
-						infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-						infoLabel.setVisible(true);
-						infoDialog.add(infoLabel);
-					}else{
-						JDialog infoDialog = new JDialog();
-						infoDialog.setSize(200,100);
-						infoDialog.setLocation(600,300);
-						infoDialog.setVisible(true);
-						JLabel infoLabel = new JLabel("密码不能为空！");
-						infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-						infoLabel.setVisible(true);
-						infoDialog.add(infoLabel);
-					}
-				}				
 				
 			}
-  }
-	    
-	  //设置表格颜色并居中
-	    public static void makeFace(JTable table) {
-	    	table.getTableHeader().setReorderingAllowed(false);// 设置JTable每个字段的顺序不可以改变
-	    	   try {
-	    	    DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
-	    	     public Component getTableCellRendererComponent(JTable table,
-	    	       Object value, boolean isSelected, boolean hasFocus,
-	    	       int row, int column) {
-	    	      if (row % 2 == 0)
-	    	       setBackground(Color.white); // 设置奇数行底色
-	    	      else if (row % 2 == 1)
-	    	       setBackground(new Color(206, 231, 255)); // 设置偶数行底色
-	    	      return super.getTableCellRendererComponent(table, value,
-	    	        isSelected, hasFocus, row, column);
-	    	     }
-	    	    };
-	    	    for (int i = 0; i < table.getColumnCount(); i++) {
-	    	     table.getColumn(table.getColumnName(i)).setCellRenderer(tcr);
-	    	    }
-	    	    tcr.setHorizontalAlignment(JLabel.CENTER);
-	    	    table.setDefaultRenderer(Object.class,tcr);
-	    	    
-	    	   } catch (Exception ex) {
-	    	    ex.printStackTrace();
-	    	   }
+    }
 
-	    	}
-
-}
+} 

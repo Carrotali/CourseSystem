@@ -1,25 +1,29 @@
 package frame;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.Component;
 import java.awt.Font;
-import javax.swing.JButton;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
+import sun.swing.DefaultLookup;
 import busninesslogic.AdminBL;
 import busninesslogic.InstituteTeacherBL;
 import busninesslogic.LoginBL;
@@ -27,7 +31,6 @@ import busninesslogic.LoginBLService;
 import busninesslogic.SchoolTeacherBL;
 import busninesslogic.StudentBL;
 import busninesslogic.TeacherBL;
-import busninesslogic.TeacherBLService;
 
 
 public class LoginFrame{
@@ -40,9 +43,9 @@ public class LoginFrame{
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;	
 	private JPanel panel_1;
-	private JComboBox  comboBox ;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
+	private JComboBox<String>  comboBox ;
+	private MyButton btnNewButton;
+	private MyButton btnNewButton_1;
 	private JTextField textField;
 	private JTextField textField_1;
 	LoginBLService loginBL;
@@ -97,49 +100,51 @@ public class LoginFrame{
 		
 		lblNewLabel_1 = new JLabel("学号/工号");
 		lblNewLabel_1.setBounds(158, 45, 115, 45);
-		lblNewLabel_1.setFont(new Font("楷体", Font.BOLD, 16));
+		lblNewLabel_1.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		panel_1.add(lblNewLabel_1);
 		lblNewLabel_1.setVisible(true);
 		
 		textField = new JTextField();
-		textField.setBounds(283, 50, 168, 30);
+		textField.setBounds(283, 50, 160, 30);
 		panel_1.add(textField);
 		textField.setColumns(10);
 		textField.setVisible(true);
 		
 		lblNewLabel_2 = new JLabel("密码");
 		lblNewLabel_2.setBounds(158, 127, 115, 45);
-		lblNewLabel_2.setFont(new Font("楷体", Font.BOLD, 16));
+		lblNewLabel_2.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		panel_1.add(lblNewLabel_2);
 		lblNewLabel_2.setVisible(true);
 
 		textField_1 = new JPasswordField();
-		textField_1.setBounds(283, 140, 168, 30);
+		textField_1.setBounds(283, 140, 160, 30);
 		panel_1.add(textField_1);
 		textField_1.setColumns(10);
 		textField_1.setVisible(true);
 
 		lblNewLabel_3 = new JLabel("用户类型");
 		lblNewLabel_3.setBounds(158, 218, 115, 45);
-		lblNewLabel_3.setFont(new Font("楷体", Font.BOLD, 16));
+		lblNewLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		panel_1.add(lblNewLabel_3);
 		lblNewLabel_3.setVisible(true);
 
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
+		comboBox.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		comboBox.setUI(new MyComboBoxUI());
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"学校教务处老师", "院系教务处老师", "任课老师", "学生","管理员"}));
-		comboBox.setBounds(283, 223, 168, 30);
+		comboBox.setBounds(283, 223, 160, 30);
 		panel_1.add(comboBox);
 		comboBox.setVisible(true);
 		
-		btnNewButton = new JButton("登录");
-		btnNewButton.setFont(new Font("楷体", Font.BOLD, 12));
+		btnNewButton = new MyButton("登录");
+		btnNewButton.setFont(new Font("微软雅黑", Font.BOLD, 12));
 		btnNewButton.setBounds(185, 300, 80, 30);
 		panel_1.add(btnNewButton);
 		btnNewButton.addActionListener(new LoginListener());
 		btnNewButton.setVisible(true);
 		
-		btnNewButton_1 = new JButton("注册");
-		btnNewButton_1.setFont(new Font("楷体", Font.BOLD, 12));
+		btnNewButton_1 = new MyButton("注册");
+		btnNewButton_1.setFont(new Font("微软雅黑", Font.BOLD, 12));
 		btnNewButton_1.setBounds(330, 300, 80, 30);
 		panel_1.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(new RegisterListener());
@@ -147,7 +152,69 @@ public class LoginFrame{
 		
 		LoginFrame.repaint();
 		
+		
 	}
+	
+	class MyComboBoxUI extends BasicComboBoxUI {
+    	/**
+         * Paints the currently selected item.
+         */
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+		public void paintCurrentValue(Graphics g,Rectangle bounds,boolean hasFocus) {
+            ListCellRenderer renderer = comboBox.getRenderer();
+            Component c;
+
+            if ( hasFocus && !isPopupVisible(comboBox) ) {
+                c = renderer.getListCellRendererComponent( listBox,
+                                                           comboBox.getSelectedItem(),
+                                                           -1,
+                                                           true,
+                                                           false );
+            }
+            else {
+                c = renderer.getListCellRendererComponent( listBox,
+                                                           comboBox.getSelectedItem(),
+                                                           -1,
+                                                           false,
+                                                           false );
+                c.setBackground(UIManager.getColor("ComboBox.background"));
+            }
+            c.setFont(comboBox.getFont());
+            if ( hasFocus && !isPopupVisible(comboBox) ) {
+                c.setForeground(new Color(199,0,133));
+                c.setBackground(Color.WHITE);
+            }
+            else {
+                if ( comboBox.isEnabled() ) {
+                    c.setForeground(Color.BLACK);
+                    c.setBackground(Color.WHITE);
+                }
+                else {
+                    c.setForeground(DefaultLookup.getColor(
+                             comboBox, this, "ComboBox.disabledForeground", null));
+                    c.setBackground(DefaultLookup.getColor(
+                             comboBox, this, "ComboBox.disabledBackground", null));
+                }
+            }
+
+            // Fix for 4238829: should lay out the JPanel.
+            boolean shouldValidate = false;
+            if (c instanceof JPanel)  {
+                shouldValidate = true;
+            }
+
+            int x = bounds.x, y = bounds.y, w = bounds.width, h = bounds.height;
+            if (padding != null) {
+                x = bounds.x + padding.left;
+                y = bounds.y + padding.top;
+                w = bounds.width - (padding.left + padding.right);
+                h = bounds.height - (padding.top + padding.bottom);
+            }
+
+            currentValuePane.paintComponent(g,c,comboBox,x,y,w,h,shouldValidate);
+        }
+    
+    }
 	
     class LoginListener implements ActionListener{
     	public void actionPerformed(ActionEvent e){

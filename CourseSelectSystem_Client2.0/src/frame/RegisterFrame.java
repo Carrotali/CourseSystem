@@ -5,9 +5,9 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
 import busninesslogic.LoginBL;
 import busninesslogic.LoginBLService;
 
@@ -32,8 +33,8 @@ public class RegisterFrame {
 	private JLabel lblNewLabel_5;
 	private JPanel panel_1;
 	private JComboBox  comboBox ;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
+	private MyButton btnNewButton;
+	private MyButton btnNewButton_1;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -181,14 +182,14 @@ public class RegisterFrame {
 		panel_1.add(lblNewLabel_4);
 
 		
-		btnNewButton = new JButton("×¢²á");
+		btnNewButton = new MyButton("×¢²á");
 		btnNewButton.setFont(new Font("¿¬Ìå", Font.BOLD, 12));
 		btnNewButton.setBounds(150, 300, 100, 30);
 		panel_1.add(btnNewButton);
 		btnNewButton.addActionListener(new RegisterListener());
 		btnNewButton.setVisible(true);
 		
-		btnNewButton_1 = new JButton("µÇÂ½");
+		btnNewButton_1 = new MyButton("µÇÂ½");
 		btnNewButton_1.setFont(new Font("¿¬Ìå", Font.BOLD, 12));
 		btnNewButton_1.setBounds(300, 300, 100, 30);
 		panel_1.add(btnNewButton_1);

@@ -2,5 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="I:/CourseSystem/jar/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="I:/CourseSystem/jar/jdom.jar"/>
+	<classpathentry kind="lib" path="I:/CourseSystem/jar/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="I:/CourseSystem/jar/log4j.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
